@@ -1,6 +1,5 @@
 function isAuth(req, res, next) {
   try {
-    console.log("This is the authorization middleware", req.isAuthenticated());
     if (req.isAuthenticated()) {
       return next();
     }

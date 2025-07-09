@@ -15,7 +15,6 @@ async function verifyForm(req, email, password, done) {
   try {
     // Check for that user
     const user = await database.getUserByEmail(email);
-    console.log('Thi is the verify callback=>',user);
     if (!user) {
       return done(
         null,
@@ -44,7 +43,6 @@ passport.use(strategy);
 passport.serializeUser((user, done) => {
   try {
     if (user) {
-        console.log('This is serialize middleware',user.id);
       return done(null, user.id);
     }
     return done(null, false);
@@ -60,7 +58,6 @@ passport.deserializeUser(async (id, done) => {
   try {
     console.log('This is deserialize middleware: ',id);
     const user = await database.getUserById(id);
-    console.log('This is deserialize middleware',user);
     if (!user) {
       return done(null, false);
     }
