@@ -10,7 +10,8 @@ const routes = require("./router/routes");
 const passport = require("passport");
 // Setup express
 const app = express();
-
+// Debug test
+app.set('trust proxy',1);
 // =======================PRISMA SETUP======================
 
 const prisma = new PrismaClient();
