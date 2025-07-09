@@ -1,0 +1,103 @@
+/* Basic inline styles for quick visualization - move to style.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #1a1a2e; /* Dark background */
+  color: #e0e0e0; /* Light text */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Make body at least viewport height */
+}
+.container {
+  max-width: 500px; /* Slightly narrower for forms */
+  margin: 50px auto;
+  background-color: #282846; /* Container background */
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  flex-grow: 1; /* Allow container to grow and push footer down */
+}
+h1 {
+  color: #8be9fd; /* Accent color */
+  margin-bottom: 25px;
+}
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+  max-width: 80%;
+  margin: 0 auto;
+}
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #f1fa8c; /* Accent color for labels */
+}
+input[type="email"],
+input[type="password"] {
+  width: calc(100% - 20px); /* Account for padding */
+  padding: 10px;
+  border: 1px solid #44475a; /* Darker border */
+  border-radius: 5px;
+  background-color: #3b3b5b; /* Input background */
+  color: #e0e0e0; /* Input text color */
+  font-size: 1em;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #8be9fd; /* Accent border on focus */
+  outline: none;
+  box-shadow: 0 0 5px rgba(139, 233, 253, 0.5);
+}
+.button {
+  display: inline-block;
+  background-color: #50fa7b; /* Primary button color */
+  color: #282846; /* Dark text on button */
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.button:hover {
+  background-color: #45b36a;
+  transform: translateY(-2px);
+}
+.alt-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #c0c0c0;
+}
+.alt-link a {
+  color: #8be9fd; /* Link color */
+  text-decoration: none;
+  font-weight: bold;
+}
+.alt-link a:hover {
+  text-decoration: underline;
+}
+.error-message {
+  color: #ff6e6e; /* Error message color */
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+footer {
+  margin-top: auto; /* Push footer to the bottom */
+  text-align: center;
+  color: #888;
+  padding: 20px;
+}
+.appName{
+  color: #50fa7b;
+  font-size: 3rem;
+}
+.app-name{
+  color: #8be9fd;
+  font-size: 1.2rem;
+}

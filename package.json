@@ -1,0 +1,39 @@
+{
+  "name": "filestorage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "postinstall": "npx prisma generate && npx prisma migrate deploy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/client": "^6.11.1",
+    "@quixo3/prisma-session-store": "^3.1.13",
+    "@supabase/supabase-js": "^2.50.3",
+    "bcrypt": "^6.0.0",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^17.0.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "multer": "^2.0.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "prisma": "^6.11.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/express-session": "^1.18.2",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

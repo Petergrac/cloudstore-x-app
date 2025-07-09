@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/homepage.css" />
+    <title>HomePage</title>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>Hello, <%= user.name %>!</h2>
+
+      <div class="messages">
+        <% if (success && success.length > 0) { %>
+        <div class="success"><%=success %></div>
+        <% } %> <% if (error && error.length > 0) { %>
+        <div class="error"><%=error[0] %></div>
+        <% } %>
+      </div>
+
+      <hr />
+
+      <form action="/folders" method="post">
+        <h3>Create Folder</h3>
+        <label for="folderName">Folder Name:</label>
+        <input
+          class="folderInput"
+          type="text"
+          id="folderName"
+          name="folderName"
+          required
+          placeholder="e.g., My New Folder"
+        />
+        <% if (user.folders && user.folders.length > 0){%>
+        <label for="folderInherit">Select its Parent Folder</label>
+        <select name="folderInherit" id="folderInherit">
+          <option value="">No Parent (Create Root Folder)</option>
+          <% user.folders.forEach(folder => {%> <% if(folder.parentId ===
+          null){%>
+          <option value="<%= folder.id %>"><%= folder.name %></option>
+          <%} else{%>
+          <option value="<%= folder.id %>">Sub-Folder/<%= folder.name %></option>
+          <%}%> <% }) %>
+        </select>
+        <%}%>
+        <button type="submit">Create Folder</button>
+      </form>
+
+      <form action="/logout" method="post" class="logout-form">
+        <button type="submit">Logout</button>
+      </form>
+    </div>
+
+    <div class="main-content">
+      <h2>Your Folders</h2>
+      <div class="folder-grid">
+        <% if (user.folders && user.folders.length > 0) { %> <%
+        user.folders.forEach(folder => { %> <% if(folder.parentId === null){%>
+        <div class="folder-card">
+          <a href="/folders/<%= folder.id %>" class="folder-carding">
+            <div class="folder-icon">&#128447;</div>
+          
+          <span class="folder-name" title="<%= folder.name %>"
+            ><%= folder.name %></span
+          >
+          <div class="folder-actions">
+            <form
+              action="/folders/<%= folder.id %>"
+              method="post"
+            ></a>
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+        <%}%> <% }); %> <% } else { %>
+        <p style="grid-column: 1 / -1; text-align: center; color: #aaa">
+          You haven't created any folders yet. Use the form on the left to get
+          started!
+        </p>
+        <% } %>
+      </div>
+
+      <hr />
+      <!-- <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="">Select a file to upload:
+          <input type="file" name="uploadedFile" required>
+        </label>
+        <button type="submit">Upload</button>
+      </form> -->
+      <hr />
+
+      <h2>Your Files</h2> <div class="item-grid">
+        <% if(user.files && user.files.length > 0){%>
+          <% user.files.forEach(file=>{ %>
+             <div class="item-card">
+          <div class="file-icon">&#128196;</div>
+          <span class="item-name" title="<%= file.filename %>"
+            ><%= file.filename %></span
+          >
+          <div class="item-actions">
+            <a class="open-link" href="<%=file.url%>" target="_blank" rel="noopener noreferrer">Open</a>
+
+            <form action="/files/<%=file.id%>" method="post" onsubmit="return confirm('Are you sure you want to delete file <%= file.filename %>?');" style="display: inline-block;">
+              <button type="submit" class="delete">Delete</button>
+            </form>
+
+          </div>
+        </div>
+          <%})%>
+        <% } else { %>
+          <p style="grid-column: 1 / -1; text-align: center; color: #aaa;">
+            You have no files yet.
+          </p>
+        <% } %>
+      </div>
+
+      <hr />
+
+      <h3>Upload Files to Root</h3>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="uploadedFileRoot">Select File:</label>
+        <input class="input-upload" type="file" id="uploadedFileRoot" name="uploadedFile" required />
+        <button class="bupload" type="submit">Upload File</button>
+      </form>
+      <p style="text-align: center; font-size: 0.85em; color: #aaa; margin-top: 10px;">
+        <small>Max file size: 10MB (configurable)</small>
+      </p>
+  </body>
+</html>

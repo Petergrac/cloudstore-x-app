@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Session model
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String 
+  expiresAt   DateTime
+}
+
+// schema.prisma
+
+model User {
+  id        String    @id @default(uuid())
+  name      String    
+  email     String    @unique // Keep unique for login
+  password  String   
+
+  folders   Folder[]
+  files     File[]
+}
+
+model Folder {
+  id        String    @id @default(uuid())
+  name      String
+  ownerId   String
+  parentId  String?  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  owner     User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  parent    Folder?   @relation("SubFolders", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Folder[]  @relation("SubFolders")
+  files     File[]
+
+  @@unique([name, ownerId, parentId]) 
+}
+
+model File {
+  id        String    @id @default(uuid())
+  filename  String
+  mimetype  String? // Good to store for file type checks
+  size      Int?    // Good to store file size
+  url       String? // If storing in cloud, this would be the URL
+
+  folderId  String?
+  ownerId   String
+
+  folder    Folder?   @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  owner     User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@unique([filename, folderId, ownerId]) // A user cannot have two files with the same name in the same folder
+}
