@@ -32,15 +32,40 @@ routes.get(
   },
   controller.loginPage
 );
-routes.post(
-  "/login",
-  passport.authenticate("local", {
-    failureFlash: true,
-    failureRedirect: "/login",
-    successRedirect: "/homepage",
-  }),
-  controller.postLogin
-);
+// routes.post(
+//   "/login",
+//   passport.authenticate("local", {
+//     failureFlash: true,
+//     failureRedirect: "/login",
+//     successRedirect: "/homepage",
+//   }),
+//   controller.postLogin
+// );
+routes.post('/login', (req, res, next) => {
+    console.log("[ROUTE] POST /login hit.");
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            console.error("[AUTH HANDLER] Passport authentication error:", err);
+            return next(err); // Pass error to Express error handler
+        }
+        if (!user) {
+            console.log("[AUTH HANDLER] Passport authentication failed (no user):", info.message);
+            // Authentication failed, redirect or send error response
+            return res.redirect('/login?error=' + encodeURIComponent(info.message || 'Authentication failed'));
+        }
+        // User successfully authenticated by strategy
+        console.log("[AUTH HANDLER] User authenticated by strategy, calling req.logIn().");
+        req.logIn(user, (err) => {
+            if (err) {
+                console.error("[AUTH HANDLER] req.logIn error:", err);
+                return next(err); // Pass error to Express error handler
+            }
+            console.log("[AUTH HANDLER] req.logIn successful. Redirecting to /homepage.");
+            // Session is now established, redirect
+            return res.redirect('/homepage'); // Ensure this is the correct success redirect
+        });
+    })(req, res, next); // Don't forget to invoke the middleware!
+});
 //
 //---------------------------PROTECTED ROUTES-----------------/
 //
