@@ -11,7 +11,7 @@ const passport = require("passport");
 // Setup express
 const app = express();
 // Debug test
-// app.set('trust proxy',1);
+app.set('trust proxy',1);
 // =======================PRISMA SETUP======================
 
 const prisma = new PrismaClient();
@@ -31,7 +31,7 @@ app.use(
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
       secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-      // sameSite: 'lax'
+      sameSite: 'lax'
     },
   })
 );
