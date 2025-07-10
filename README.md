@@ -1,14 +1,12 @@
 # CloudStore X App
-# CloudStore X App
 # A simple app to manage your cloud storage files.  
 # Features
 - View files and folders
 - Upload files
-- Download files
 - Delete files
 - Rename folders
 - Create folders
-- Move files and folders
+- Share files with others
 
 # Installation
 1. Clone the repository
@@ -25,7 +23,7 @@
    ```
 4. Start the development server
    ```bash
-   npm start
+   npm run dev
    ```
 # Usage
 - Open your browser and navigate to `http://localhost:3000`

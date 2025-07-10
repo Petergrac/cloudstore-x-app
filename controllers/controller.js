@@ -83,7 +83,8 @@ async function createFolder(req, res) {
 async function getFolder(req, res, next) {
   try {
     const id = req.params.folderId;
-    const folder = await database.getFolderById(id);
+    const owner = req.user.id;
+    const folder = await database.getFolderById(id,owner);
     res.render("folders", { user: req.user, currentFolder: folder });
   } catch (error) {
     console.log("Error when retrieving folder by id");

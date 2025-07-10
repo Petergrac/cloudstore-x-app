@@ -26,6 +26,7 @@ model User {
 
   folders   Folder[]
   files     File[]
+  sharedByFolders  SharedFolder[]
 }
 
 model Folder {
@@ -40,7 +41,7 @@ model Folder {
   parent    Folder?   @relation("SubFolders", fields: [parentId], references: [id], onDelete: Cascade)
   children  Folder[]  @relation("SubFolders")
   files     File[]
-
+  shared SharedFolder[]
   @@unique([name, ownerId, parentId]) 
 }
 
@@ -58,4 +59,17 @@ model File {
   owner     User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
   @@unique([filename, folderId, ownerId]) // A user cannot have two files with the same name in the same folder
+}
+// ... existing models (User, Folder, File) ...
+
+model SharedFolder {
+  id         String    @id @default(uuid())
+  folderId   String    // The ID of the folder being shared
+  sharedById String    // The ID of the user who initiated the sharing
+  accessKey  String    @unique // A unique, random string for the shareable URL
+  expiresAt  DateTime? // Optional: When the share link expires
+  createdAt  DateTime  @default(now())
+
+  folder     Folder    @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  sharedBy   User      @relation(fields: [sharedById], references: [id], onDelete: Cascade)
 }

@@ -192,7 +192,7 @@ body {
   box-shadow: none;
 }
 
-.folder-card .folder-actions button {
+.deletez{
   width: 100%;
   padding: 8px 10px;
   margin-top: 5px;
@@ -205,7 +205,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.folder-card .folder-actions button:hover {
+.deletez:hover {
   background-color: #c82333;
 }
 .folder-icon {
@@ -422,4 +422,19 @@ input {
 .input-upload{
   padding: 10px;
   background: #217fbd;
+}
+.share-button{
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  background-color: #f0c040; /* Red for delete */
+  color: rgb(14, 14, 14);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+}
+.share-button:hover{
+  background: #e0a800;
 }

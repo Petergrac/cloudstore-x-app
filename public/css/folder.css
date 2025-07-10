@@ -204,30 +204,6 @@ body {
   box-sizing: border-box; /* Include padding/border in width */
 }
 
-.item-card .item-actions button.delete {
-  background-color: #dc3545; /* Red for delete */
-  margin-right: 4%; /* Space between buttons */
-}
-
-.item-card .item-actions button.delete:hover {
-  background-color: #c82333;
-}
-
-.item-card .item-actions button.edit {
-  background-color: #007bff; /* Blue for edit */
-}
-
-.item-card .item-actions button.edit:hover {
-  background-color: #0056b3;
-}
-
-.item-card .item-actions button.open-folder {
-  background-color: #6a5acd; /* Royal purple */
-}
-.item-card .item-actions button.open-folder:hover {
-  background-color: #5345b8;
-}
-
 .folder-icon,
 .file-icon {
   font-size: 3em;
@@ -282,7 +258,7 @@ body {
     margin-bottom: 5px;
   }
 }
-.open-linkz{
+.open-linkz {
   text-decoration: none;
   color: white;
   background: #2196f3;
@@ -291,7 +267,49 @@ body {
   border: none;
   outline: none;
 }
-.deletez{
+.deletez {
   background: #f76161;
   font-weight: normal;
+}
+.share-input {
+  height: 1.8rem;
+  background: rgba(91, 88, 88, 0.581);
+  color: rgb(214, 210, 210);
+  border: 1px solid rgb(201, 197, 197);
+  outline: none;
+  border-radius: 6px;
+  padding: 4px;
+}
+.share-input:focus {
+  border: 2px solid #2196f3;
+}
+
+.item-card .item-actions button.edit {
+  background-color: #007bff; /* Blue for edit */
+}
+
+.item-card .item-actions button.edit:hover {
+  background-color: #0056b3;
+}
+
+.item-card .item-actions button.open-folder {
+  background-color: #6a5acd; /* Royal purple */
+}
+.item-card .item-actions button.open-folder:hover {
+  background-color: #5345b8;
+}
+.delete{
+  background-color: #dc3545; /* Red for delete */
+  margin-right: 4%; /* Space between buttons */
+}
+
+.delete:hover {
+  background-color: #c82333;
+}
+.share-button{
+  background: #ffc107;
+  color: #333;
+}
+.share-button:hover{
+  background: #e0a800;
 }

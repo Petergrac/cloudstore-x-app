@@ -64,11 +64,19 @@
             ><%= folder.name %></span
           >
           <div class="folder-actions">
+            <form class="share-button"
+              action="/folders/<%= folder.id %>/share"
+              method="post"
+              style="display: inline-block"
+            >
+              <button type="submit" class="share-button">Share</button>
+            </form>
             <form
               action="/folders/<%= folder.id %>"
               method="post"
+              
             ></a>
-              <button type="submit">Delete</button>
+              <button class="deletez" type="submit">Delete</button>
             </form>
           </div>
         </div>
@@ -79,14 +87,6 @@
         </p>
         <% } %>
       </div>
-
-      <hr />
-      <!-- <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="">Select a file to upload:
-          <input type="file" name="uploadedFile" required>
-        </label>
-        <button type="submit">Upload</button>
-      </form> -->
       <hr />
 
       <h2>Your Files</h2> <div class="item-grid">

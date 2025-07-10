@@ -56,7 +56,6 @@ passport.serializeUser((user, done) => {
 // Deserialize user
 passport.deserializeUser(async (id, done) => {
   try {
-    console.log('This is deserialize middleware: ',id);
     const user = await database.getUserById(id);
     if (!user) {
       return done(null, false);

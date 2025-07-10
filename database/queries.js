@@ -41,6 +41,25 @@ async function createFile(fileData) {
   });
   return newFile;
 }
+
+// Create shared folder ======= SHARED Folder =======
+//
+async function createSharedFolder(folderDetail) {
+  try {
+    const sharedFolder = await prisma.sharedFolder.create({
+      data: {
+        folderId: folderDetail.folderId,
+        sharedById: folderDetail.userId,
+        accessKey: folderDetail.accessKey,
+        expiresAt: folderDetail.expiresAt,
+      },
+    });
+    return sharedFolder;
+  } catch (error) {
+    console.error("Cannot create the shared link");
+    throw error;
+  }
+}
 //
 //  ========================= READ  ===========================//
 //
@@ -83,10 +102,11 @@ async function getUserById(userId) {
   return user;
 }
 // Get folder by id    =======FOLDER======
-async function getFolderById(folderId) {
+async function getFolderById(folderId, owner) {
   const folder = await prisma.folder.findUnique({
     where: {
       id: folderId,
+      ownerId: owner,
     },
     include: {
       children: {
@@ -103,6 +123,29 @@ async function getFolderById(folderId) {
     },
   });
   return folder;
+}
+// Get shared folder by access key  =======SHARED FOLDER ======
+async function getSharedFolder(key) {
+  const sharedFolder = await prisma.sharedFolder.findUnique({
+    where: {
+      accessKey: key,
+    },
+    include: {
+      folder: {
+        include: {
+          children: true,
+          files: true,
+          owner: {
+            select: { name: true },
+          },
+        },
+      },
+      sharedBy: {
+        select: { name: true },
+      },
+    },
+  });
+  return sharedFolder;
 }
 //
 // =====================================UPDATE========================//
@@ -159,8 +202,11 @@ async function deleteFile(fileId, ownerId) {
       .from("file-storage-app")
       .remove([SupabaseFilePath]);
     if (storageError) {
-       console.error("Supabase Storage Deletion Error: ", storageError);
-       throw new Error('Failed to delete file form the storage',storageError.message);
+      console.error("Supabase Storage Deletion Error: ", storageError);
+      throw new Error(
+        "Failed to delete file form the storage",
+        storageError.message
+      );
     }
     console.log(`File ${SupabaseFilePath} deleted Successfully`);
     // 4.Delete the file metadata from postgreSQL database
@@ -175,6 +221,23 @@ async function deleteFile(fileId, ownerId) {
     throw error;
   }
 }
+//
+//                ============== SHARED FOLDER = =============
+//
+async function deleteSharedFolder(id, ownerId) {
+  try {
+    const deleteShared = await prisma.sharedFolder.delete({
+      where: {
+        id: id,
+        sharedById: ownerId,
+      },
+    });
+    return deleteShared.count > 0;
+  } catch (error) {
+    console.error(`Error deleting the folder: ${error.message}`);
+    throw error;
+  }
+}
 
 module.exports = {
   checkEmail,
@@ -186,5 +249,8 @@ module.exports = {
   deleteFolder,
   updateFolderName,
   createFile,
-  deleteFile
+  deleteFile,
+  createSharedFolder,
+  getSharedFolder,
+  deleteSharedFolder,
 };
